@@ -1,0 +1,15 @@
+body {
+    background: yellow;
+    color: pink;
+}
+
+h1{
+    color: blanchedalmond;
+    font-size: larger;
+}
+
+.img{
+    background-image: url(../images/1.jpg);
+    width:466px;
+    height:453px;
+}
