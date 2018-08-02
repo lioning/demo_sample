@@ -8,13 +8,11 @@ import functools
 import unittest
 
 '''
-将对象属性转换化字符串
+将对象__dict__属性转换化字符串
 '''
-def log_obj(obj):
+def dump(obj):
     if hasattr(obj,'__dict__'):
         return '\n'.join(['%s:%s' % item for item in obj.__dict__.items()])
-    #if hasattr(obj,'debug_dump'):
-    #    return obj.debug_dump()
     else:
         return obj
 
@@ -28,26 +26,30 @@ logging.basicConfig(level=logging.DEBUG,
 
 #没有@functools.wraps(func)，被装饰的函数内部使用__name__的结果将会是wrapper
 '''
-@带参数的装饰函数
+@不指定打印内容的调试装饰函数
+用此方法装饰的函数，执行前将打印参数列表，结束后将打印返回值
 '''
 def log(func):
     @functools.wraps(func)
     def wrapper(*args, **kw):
         logging.debug('%s:----------start---------------' % func.__name__)
-        for index,arg in enumerate(args):
-            logging.debug('args[%s]=[%s]' % (index, log_obj(arg)) )
+
+        for i,arg in enumerate(args):
+            logging.debug('args[%s]=[%s]' % (i, dump(arg)) )
+            
         ret = func(*args, **kw)
         logging.debug('%s:**********end with:[[%s]]************' % (func.__name__,ret) )
         return ret
     return wrapper
 '''
-@不带参数的装饰函数
+@指定打印内容的调试装饰函数
+用此方法装饰的函数，执行前将打印指定内容，结束后将打印返回值
 '''
 def logtext(text):
     def decorator(func):
         @functools.wraps(func)
         def wrapper(*args, **kw):
-            logging.info('%s %s():' % (text, func.__name__))
+            logging.info('%s: %s()' % (func.__name__, text))
             return func(*args, **kw)
         return wrapper
     return decorator
