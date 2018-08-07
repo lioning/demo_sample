@@ -1,0 +1,59 @@
+digraph "classes" {
+    charset="utf-8"
+    //布局方向
+    rankdir=BT
+
+    //类：实心三角形
+    node[ shape="record"]  //fontcolor="red"
+
+    //继承(泛化))箭头：空心三角形
+    edge[ arrowhead="empty", arrowtail="none" ]
+
+    //实例化（接口）箭头：空心三角形+虚线
+    /*
+    edge[  arrowhead="empty", arrowtail="none", style="dashed" ]
+    */
+
+    //弓箭头
+    /*
+    edge [arrowhead="vee", arrowtail="none",style="solid"]
+    */
+            
+    //组合箭头：实心菱形，带绿色文字
+    /*
+    edge [arrowhead="diamond", arrowtail="none", fontcolor="green", label="main_room", style="solid"]
+    */
+
+    //聚合箭头：空心菱形
+    /*
+    edge [arrowhead="odiamond", arrowtail="none",style="solid"]
+    */
+    Base [label="{AbstractAsyncioBase|\l|+ async on_read()}"] //label内容有{}表示竖排，没有表示横向排列
+    Chat [label="{AsyncioChat
+            |
+                +ac_in_buffer : bytes\l
+                +encoding : str\l
+                +use_encoding : int\l
+            |
+                +collect_incoming_data()\l
+                +found_terminator()\l}"]
+
+    TChat [label="{TextChat
+            |
+                -buffer : char\l
+            |
+                +send_data()}"]
+
+    {Chat,TChat} -> Base
+
+    //子图名字必须 "cluster" 打头
+    subgraph cluster_1{
+        label="subgraph 1"
+
+        Shape [label="{Shape}"]
+        Retangle [label="{RetanbleBase}"]
+
+        Retangle -> Shape
+        { rank=min}
+    }
+}
