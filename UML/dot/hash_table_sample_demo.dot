@@ -1,55 +1,32 @@
-digraph "HashTable" {
+digraph "hashtable" {
     charset="utf-8"
-    //布局方向
-    rankdir=BT
+    nodesep = .5;
+    rankdir = LR;    //指定绘图的方向 (LR从左到右绘制)
 
-    //类：实心三角形
-    node[ shape="record"]  //fontcolor="red"
+    #http://www.graphviz.org/documentation/
+    ## 花括号表示横向排列（方形 recod 才有效）
+    ## <> 定义锚点
 
-    //继承(泛化))箭头：空心三角形
-    edge[ arrowhead="empty", arrowtail="none" ]
+    //定义竖直节点
+    node[shape=record, width=.1, height=.1];
+    node0[label="<f0> |<f1> |<f2> |<f3> |<f4> |<f5> |<f6> ", height=2.5]; //节点, 7个属性
 
-    //实例化（接口）箭头：空心三角形+虚线
-    /*
-    edge[  arrowhead="empty", arrowtail="none", style="dashed" ]
-    */
+    //定义横向节点
+    node[width=1.5];
+    node1[label="{<n> a13 | 111 | <p>}"]; //我也是一个节点, 定义了3个属性
+    node2[label="{<n> hello | 2387 | <p>}"];
+    node3[label="{<n> g23 | 344 | <p>}"];
+    node4[label="{<n> k535 | 246 | <p>}"];
+    node5[label="{<n> h25 | 13 | <p>}"];
+    node6[label="{<n> dj | 04 | <p>}"];
+    node7[label="{<n> sbd | 0x543 | <p>}"];
 
-            
-    //组合箭头：实心菱形，带绿色文字
-    /*
-    edge [arrowhead="diamond", arrowtail="none", fontcolor="green", label="main_room", style="solid"]
-    */
-
-    //聚合箭头：空心菱形
-    /*
-    edge [arrowhead="odiamond", arrowtail="none",style="solid"]
-    */
-    Base [label="{AbstractAsyncioBase|\l|+ async on_read()}"] //label内容有{}表示竖排，没有表示横向排列
-    Chat [label="{AsyncioChat
-            |
-                +ac_in_buffer : bytes\l
-                +encoding : str\l
-                +use_encoding : int\l
-            |
-                +collect_incoming_data()\l
-                +found_terminator()\l}"]
-
-    TChat [label="{TextChat
-            |
-                -buffer : char\l
-            |
-                +send_data()}"]
-
-    {Chat,TChat} -> Base
-
-    //子图名字必须 "cluster" 打头
-    subgraph cluster_1{
-        label="subgraph 1"
-
-        Shape [label="{Shape}"]
-        Retangle [label="{RetanbleBase}"]
-
-        Retangle -> Shape
-        { rank=min}
-    }
+    //建立节点之间的联系
+    node0:f0 -> node1:n;
+    node0:f1 -> node2:n;
+    node0:f2 -> node3:n;
+    node0:f5 -> node4:n;
+    node0:f6 -> node5:n;
+    node2:p -> node6:n;
+    node4:p -> node7:n;
 }
