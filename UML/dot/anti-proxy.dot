@@ -1,0 +1,38 @@
+digraph "classes" {
+    charset="utf-8"
+    nodesep = .5;
+    rankdir = LR;    //指定绘图的方向 (LR从左到右绘制)
+
+    subgraph cluster_1{
+        label="clients"
+        client1
+        client2
+        "client ..."
+    }
+
+    subgraph cluster_2{
+        label="serves"
+        proxy
+        subgraph cluster_3{
+            label="local"
+            server1
+            server2
+            "server ..."
+        }
+    }
+
+
+    edge [label="request server"]
+    client1 -> proxy
+
+    edge [label=""]
+    client2 -> proxy
+    "client ..." -> proxy
+
+    edge [label="request server"]
+    proxy -> server1
+
+    edge [label=""]
+    proxy -> server2
+    proxy -> "server ..."
+}
