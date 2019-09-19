@@ -17,7 +17,7 @@ def dump(obj):
         return obj
 
 logging.basicConfig(level=logging.DEBUG,
-                format='%(asctime)s[%(funcName)s:%(lineno)d][%(levelname)s]:%(message)s',
+                format='%(asctime)s-[%(levelname)s]-[%(funcName)s:%(lineno)d]---:%(message)s',
                 datefmt='%a,%Y/%m/%d, %H:%M:%S')
                 #datefmt='%a, %d %b %Y %H:%M:%S',
 #format 支持的变量
